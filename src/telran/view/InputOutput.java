@@ -2,7 +2,6 @@ package telran.view;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -10,14 +9,14 @@ import java.util.function.Predicate;
 public interface InputOutput {
 	
 	String readString(String prompt);
-	
+
 	void writeObject(Object obj);
 	
 	default void close() {}
 
 	default void writeLine(Object obj) {
 		String str = obj + "\n";
-		writeObject(str);
+		writeObject(str);		
 	}
 
 	default <R> R readObject(String prompt, String errorPrompt, Function<String, R> mapper) {
@@ -28,10 +27,15 @@ public interface InputOutput {
 				result = mapper.apply(str);
 				break;
 			} catch (Exception e) {
-				writeLine(errorPrompt + e.getMessage());
+				String message = e.getMessage();
+				if (message == null) {
+					message = "";
+				}
+				writeLine(errorPrompt + " " + message);
 			}
 		}
 		return result;
+
 	}
 	
 	default Integer readInt(String prompt, String errorPrompt) {
@@ -51,20 +55,25 @@ public interface InputOutput {
 		});
 	}
 	
-	default Long readLong(String prompt, String errorPrompt) {
-		return readObject(prompt, errorPrompt, Long::parseLong);
+	default long readLong(String prompt, String errorPrompt) {
+		return readObject(prompt, errorPrompt,Long::parseLong);
 	}
 	
-	default String readOptions(String prompt, String errorPrompt, List<String> options) {
+	default double readDouble(String prompt, String errorPrompt) {
+		return readObject(prompt, errorPrompt,Double::parseDouble);
+	}
+	
+	default String readPredicate(String prompt, String errorPrompt, Predicate<String> predicate) {
 		return readObject(prompt, errorPrompt, s -> {
-			String strOptions [] = s.split(" ");
-			Arrays.stream(strOptions).forEach(o -> {
-				if(!options.contains(o)) {
-					throw new RuntimeException("no such option");
-				}
-			});
+			if (!predicate.test(s)) {
+				throw new RuntimeException();
+			}
 			return s;
 		});
+	}
+	
+	default String readOption (String prompt, String errorPrompt, List<String> options ) {
+		return readPredicate(prompt, errorPrompt, options::contains);
 	}
 	
 	default LocalDate readDate(String prompt, String errorPrompt) {
@@ -74,15 +83,6 @@ public interface InputOutput {
 	default LocalDate readDate(String prompt, String errorPrompt, String format) {
 		return readObject(prompt, errorPrompt, s -> 
 			LocalDate.parse(s, DateTimeFormatter.ofPattern(format)));
-	}
-	
-	default String readPredicate(String prompt, String errorPrompt, Predicate<String> predicate) {
-		return readObject(prompt, errorPrompt, s -> {
-			if(!predicate.test(s)) {
-				throw new RuntimeException(" " + s);
-			};
-			return s;
-		});
 	}
 
 }
