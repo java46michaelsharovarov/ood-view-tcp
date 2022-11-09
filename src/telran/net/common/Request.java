@@ -1,4 +1,4 @@
-package telran.net;
+package telran.net.common;
 
 import java.io.Serializable;
 

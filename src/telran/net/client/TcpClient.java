@@ -1,15 +1,19 @@
-package telran.net;
+package telran.net.client;
 
 import java.io.*;
 import java.net.*;
 
-public class TcpClientHandler implements NetworkHandler {
+import telran.net.common.Request;
+import telran.net.common.Response;
+import telran.net.common.ResponseCode;
+
+public class TcpClient implements NetworkClient {
 	
 	private Socket socket;
 	private ObjectOutputStream output;
 	private ObjectInputStream input;
 	
-	public TcpClientHandler(String hostname, int port) throws Exception{
+	public TcpClient(String hostname, int port) throws Exception{
 		socket = new Socket(hostname, port);
 		output = new ObjectOutputStream(socket.getOutputStream());
 		input = new ObjectInputStream(socket.getInputStream());
@@ -33,6 +37,8 @@ public class TcpClientHandler implements NetworkHandler {
 
 	@Override
 	public void close() throws IOException {
+		input.close();
+		output.close();
 		socket.close();
 	}
 

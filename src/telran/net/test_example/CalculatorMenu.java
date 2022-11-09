@@ -1,13 +1,13 @@
-package telran.net.tests;
+package telran.net.test_example;
 
 import telran.view.InputOutput;
 import telran.view.Item;
 
 public class CalculatorMenu {
 	
-	private static Calculator calculator;
+	private static CalculatorService calculator;
 	
-	public static Item[] getCalculatorItems(Calculator calculator) {
+	public static Item[] getCalculatorItems(CalculatorService calculator) {
 		CalculatorMenu.calculator = calculator;
 		Item[] res = {
 				Item.of("Adding", CalculatorMenu::add),

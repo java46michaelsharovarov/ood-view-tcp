@@ -1,8 +1,8 @@
-package telran.net;
+package telran.net.client;
 
 import java.io.*;
 
-public interface NetworkHandler extends Closeable{
+public interface NetworkClient extends Closeable{
 	
 	<T> T send(String requestType, Serializable requestData);
 	

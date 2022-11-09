@@ -1,6 +1,6 @@
-package telran.net.tests;
+package telran.net.test_example;
 
-public class CalculatorImpl implements Calculator {
+public class CalculatorServiceImpl implements CalculatorService {
 
 	@Override
 	public double add(double op1, double op2) {		
