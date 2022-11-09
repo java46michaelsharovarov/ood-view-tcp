@@ -24,6 +24,7 @@ public class ClientSessionHandler implements Runnable {
 				ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
 				ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
 				) {
+			System.out.println("Client arrived:" + socket.getRemoteSocketAddress());
 			while(true) {
 				Request request = (Request) input.readObject();
 				Response response = protocol.handlRequest(request);

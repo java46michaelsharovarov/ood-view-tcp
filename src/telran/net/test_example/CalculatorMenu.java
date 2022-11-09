@@ -5,10 +5,10 @@ import telran.view.Item;
 
 public class CalculatorMenu {
 	
-	private static CalculatorService calculator;
+	private static CalculatorService service;
 	
-	public static Item[] getCalculatorItems(CalculatorService calculator) {
-		CalculatorMenu.calculator = calculator;
+	public static Item[] getCalculatorItems(CalculatorService service) {
+		CalculatorMenu.service = service;
 		Item[] res = {
 				Item.of("Adding", CalculatorMenu::add),
 				Item.of("Subtracting", CalculatorMenu::subtract),
@@ -20,12 +20,12 @@ public class CalculatorMenu {
 	
 	private static void add(InputOutput io) {
 		double numbers[] = enterNumbers(io);
-		io.writeLine(calculator.add(numbers[0], numbers[1]));
+		io.writeLine(service.add(numbers[0], numbers[1]));
 	}
 
 	private static void subtract(InputOutput io) {
 		double numbers[] = enterNumbers(io);		
-		io.writeLine(calculator.subtract(numbers[0], numbers[1]));
+		io.writeLine(service.subtract(numbers[0], numbers[1]));
 	}
 
 	private static void divide(InputOutput io) {
@@ -33,13 +33,13 @@ public class CalculatorMenu {
 		if(numbers[1] == 0) {
 			io.writeLine("division by zero");
 		} else {
-			io.writeLine(calculator.divide(numbers[0], numbers[1]));
+			io.writeLine(service.divide(numbers[0], numbers[1]));
 		}
 	}
 	
 	private static void multiply(InputOutput io) {
 		double numbers[] = enterNumbers(io);
-		io.writeLine(calculator.multiply(numbers[0], numbers[1]));
+		io.writeLine(service.multiply(numbers[0], numbers[1]));
 	}
 	
 	private static double[] enterNumbers(InputOutput io) {

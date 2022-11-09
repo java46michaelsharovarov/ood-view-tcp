@@ -12,14 +12,16 @@ import telran.view.Menu;
 public class CalculatorApp {
 
 	public static void main(String[] args) {
+		String hostName = (args.length > 0) ? args[0] : "localhost";
 		try {
-			TcpClient handler = new TcpClient("localhost", 3000);
+			TcpClient handler = new TcpClient(hostName, 3000);
 			NetCalculatorProxy proxy = new NetCalculatorProxy(handler);
 			ArrayList<Item> items = new ArrayList<>(
 					Arrays.asList(CalculatorMenu.getCalculatorItems(proxy)));
-			items.add(Item.of("Exit", e -> {
+			items.add(Item.of("Close&Exit", e -> {
 				try {
 					handler.close();
+					e.writeLine("Goodbye");
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}

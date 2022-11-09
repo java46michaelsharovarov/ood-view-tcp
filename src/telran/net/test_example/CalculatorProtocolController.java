@@ -1,6 +1,7 @@
 package telran.net.test_example;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import telran.net.common.ApplProtocol;
 import telran.net.common.Request;
@@ -56,6 +57,7 @@ public class CalculatorProtocolController implements ApplProtocol {
 	private double[] getArguments(Serializable requestData) throws Exception {
 		try {
 			double[] res = (double[]) requestData;
+			System.out.println(Arrays.toString(res));
 			if (res.length != 2) {
 				throw new Exception("no two operands");
 			}
