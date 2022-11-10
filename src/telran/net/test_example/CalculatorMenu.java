@@ -13,7 +13,8 @@ public class CalculatorMenu {
 				Item.of("Adding", CalculatorMenu::add),
 				Item.of("Subtracting", CalculatorMenu::subtract),
 				Item.of("Multiplying", CalculatorMenu::multiply),
-				Item.of("Dividing", CalculatorMenu::divide)
+				Item.of("Dividing", CalculatorMenu::divide),
+				Item.exit()
 			};
 		return res;
 	}
